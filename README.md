@@ -48,7 +48,7 @@ const cartesian3D = viewer.scene.pickPosition(windowPosition);
 ### How to draw ECEF?
 
 ```
- const axisLength = 15000000;
+const axisLength = 15000000;
 
 const xAxisEnd = new Cesium.Cartesian3(axisLength, 0, 0);
 const yAxisEnd = new Cesium.Cartesian3(0, axisLength, 0);
@@ -173,21 +173,12 @@ const height = southNorthGeodesic.surfaceDistance;
 ```
 const context = viewer.scene.context;
 
-const maxPixelSize = Math.max(
-    context.drawingBufferWidth,
-    context.drawingBufferHeight
-);
-
-const metersPerPixel = camera.getPixelSize(this._boundingSphere,
-    context.drawingBufferWidth,
-    context.drawingBufferHeight);
+const maxPixelSize = Math.max(context.drawingBufferWidth, context.drawingBufferHeight);
+const metersPerPixel = camera.getPixelSize(this._boundingSphere, context.drawingBufferWidth, context.drawingBufferHeight);
 
 const radius = this._boundingSphere.radius;
 const pixelsPerMeter = 1.0 / metersPerPixel;
-const diameterInPixels = Math.min(
-    pixelsPerMeter * (2.0 * radius),
-    maxPixelSize
-);
+const diameterInPixels = Math.min(pixelsPerMeter * (2.0 * radius), maxPixelSize);
 ```
 
 ## Viewer
@@ -200,7 +191,7 @@ const viewer = new Viewer("cesiumContainer", {
     homeButton: false,
     sceneModePicker: false,
     navigationHelpButton: false,
-    geocoder: false,
+    geocoder: false
 });
 ```
 
@@ -220,8 +211,8 @@ viewer.bottomContainer.style.display = "none";
 
 ```
 const viewer = new Cesium.Viewer("cesiumContainer", {
-    timeline: false,
-    });
+    timeline: false
+});
 ```
 
 ### How to hide animation widget?
@@ -365,8 +356,8 @@ viewer.entities.add({
 ```
 
 const viewer = new Cesium.Viewer("cesiumContainer", {
-imageryProvider: false,
-baseLayerPicker: false,
+    imageryProvider: false,
+    baseLayerPicker: false
 });
 
 ```
@@ -384,7 +375,7 @@ viewer.scene.backgroundColor = Color.WHITE.clone();
 ```
 
 viewer.imageryLayers.addImageryProvider(
-new Cesium.TileCoordinatesImageryProvider()
+    new Cesium.TileCoordinatesImageryProvider()
 );
 
 ```
@@ -397,14 +388,6 @@ viewer.scene.globe.depthTestAgainstTerrain = true;
 
 ```
 
-```
-
-const viewer = new Cesium.Viewer('cesiumContainer', {
-globe: false
-});
-
-```
-
 ### How to show FPS?
 
 ```
@@ -414,6 +397,14 @@ viewer.scene.debugShowFramesPerSecond = true;
 ```
 
 ### How to hide the globe?
+
+```
+
+const viewer = new Cesium.Viewer('cesiumContainer', {
+    globe: false
+});
+
+```
 
 ```
 
@@ -433,7 +424,7 @@ viewer.scene.skyBox.show = false;
 ```
 
 const viewer = new Cesium.Viewer("cesiumContainer", {
-skyAtmosphere: false,
+    skyAtmosphere: false,
 });
 
 ```
@@ -499,7 +490,7 @@ const height = scene.sampleHeight(carto);
 ```
 
 const terrainProvider = new Cesium.CesiumTerrainProvider({
-url: "your url",
+    url: "your url",
 });
 viewer.scene.globe.terrainProvider = terrainProvider;
 
@@ -509,7 +500,7 @@ viewer.scene.globe.terrainProvider = terrainProvider;
 
 ```
 
-viewer.scene.globe.getHeight(Cesium.Cartographic.fromDegrees(longitude, latitude));
+const h = viewer.scene.globe.getHeight(Cesium.Cartographic.fromDegrees(longitude, latitude));
 
 ```
 
@@ -517,7 +508,7 @@ viewer.scene.globe.getHeight(Cesium.Cartographic.fromDegrees(longitude, latitude
 
 ```
 
-viewer.scene.globe.\_surface.tileProvider.\_debug.wireframe = true;
+viewer.scene.globe._surface.tileProvider._debug.wireframe = true;
 
 ```
 
@@ -551,7 +542,7 @@ function createQuantizedMeshTerrainData in client\src\cesium\CesiumTerrainProvid
 
 ```
 
-const skirtHeight = provider.getLevelMaximumGeometricError(level) \* 5.0;
+const skirtHeight = provider.getLevelMaximumGeometricError(level) * 5.0;
 
 ```
 
@@ -559,7 +550,7 @@ const skirtHeight = provider.getLevelMaximumGeometricError(level) \* 5.0;
 
 ```
 
-viewer.scene.globe.\_surface.\_tilesToRender;
+viewer.scene.globe._surface._tilesToRender;
 
 ```
 
@@ -574,7 +565,7 @@ in GlobeSurfaceTileProvider.js
 
 ```
 
-TerrainFillMesh.updateFillTiles(this, this.\_quadtree.\_tilesToRender, frameState, this.\_vertexArraysToDestroy);
+TerrainFillMesh.updateFillTiles(this, this._quadtree._tilesToRender, frameState, this._vertexArraysToDestroy);
 
 ```
 
@@ -586,9 +577,9 @@ TerrainFillMesh.updateFillTiles(this, this.\_quadtree.\_tilesToRender, frameStat
 
 const position = new Cesium.Cartesian3(position.x, position.y, position.z);
 const hpr = new Cesium.HeadingPitchRoll(
-headingPitchRoll.heading,
-headingPitchRoll.pitch,
-headingPitchRoll.roll
+    headingPitchRoll.heading,
+    headingPitchRoll.pitch,
+    headingPitchRoll.roll
 );
 const scaleCartesian3 = new Cesium.Cartesian3(scale.x, scale.y, scale.z);
 const modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position, hpr);
@@ -598,9 +589,11 @@ tileset.modelMatrix = Cesium.Matrix4.setScale(modelMatrix, scaleCartesian3, new 
 
 ### How can we determine the moment when all tiles of 3D Tiles are loaded?
 
+```
 tilesets.allTilesLoaded.addEventListener(function() {
-console.log('All tiles are loaded');
+    console.log('All tiles are loaded');
 });
+```
 
 ## Shader
 
@@ -608,7 +601,7 @@ console.log('All tiles are loaded');
 
 ```
 
-Cesium.ShaderSource.\_czmBuiltinsAndUniforms["test"] = "test"
+Cesium.ShaderSource._czmBuiltinsAndUniforms["test"] = "test"
 
 ```
 
@@ -617,29 +610,26 @@ Cesium.ShaderSource.\_czmBuiltinsAndUniforms["test"] = "test"
 ### how to remove(hide, disable) selection indicator when I click an entity?
 
 ```
-
 const viewer = new Cesium.Viewer('cesiumContainer', {
-selectionIndicator: false
+    selectionIndicator: false
 });
 
 ```
 
 ```
-
 viewer.selectedEntityChanged.addEventListener(function (newEntity) {
-viewer.selectedEntity = undefined;
-// to do your custom logic
+    viewer.selectedEntity = undefined;
+    // to do your custom logic
 });
 
 ```
 
 ```
-
-viewer.\_enableInfoOrSelection = false;
+viewer._enableInfoOrSelection = false;
 
 ```
 
-### How to screenshot for viewer?
+### How to get screenshot for viewer?
 
 ```
 
@@ -650,19 +640,19 @@ const quality = 0.5;
 const dataUrl = viewer.canvas.toDataURL("image/jpg", quality);
 
 const downloadURL = function(data, fileName) {
-const a = document.createElement('a');
-a.href = data;
-a.download = fileName;
-document.body.appendChild(a);
-a.style = 'display: none';
-a.click();
-a.remove();
+    const a = document.createElement('a');
+    a.href = data;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    a.click();
+    a.remove();
 };
 
 downloadURL(dataUrl, 'capture.jpg');
 
 setTimeout(function() {
-return window.URL.revokeObjectURL(dataUrl);
+    return window.URL.revokeObjectURL(dataUrl);
 }, 1000);
 
 ```
@@ -670,10 +660,9 @@ return window.URL.revokeObjectURL(dataUrl);
 ### How to override the home button click?
 
 ```
-
 viewer.homeButton.viewModel.command.beforeExecute.addEventListener(function (e) {
-e.cancel = true;
-// Add any custom code here, such as flying to some saved view.
+    e.cancel = true;
+    // Add any custom code here, such as flying to some saved view.
 });
 
 ```
@@ -681,11 +670,6 @@ e.cancel = true;
 ### How to show error message?
 
 ```
-
 viewer.cesiumWidget.showErrorPanel("error title", "This is a custom error message", "error");
-
-```
-
-```
 
 ```
